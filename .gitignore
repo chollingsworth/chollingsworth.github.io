@@ -1,0 +1,7 @@
+# if doesn't work ensure is LF not CRLF
+
+*.ipynb
+.env
+/jupyter
+jupyter/
+
