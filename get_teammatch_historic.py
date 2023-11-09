@@ -10,11 +10,15 @@ import pandas as pd
 
 
 """ 
-To get histotic teammatch data.  
+To get historic teammatch data.  
+
+Logic bit worky at the moemnt.  
+
+if LEAGUES_TO_GET - will get them 1 by 1 and then combine into one file.
+
+if not LEAGUES_TO_GET - will get for all leagues and save individually.
 
 """
-
-PANDAS_LIST = []                                    # save pandas data frame from each call so can concatenate them
 
 LEAGUES_TO_GET = ['england-premier-league', 'spain-la-liga', 'germany-bundesliga', 'italy-serie-a', 'france-ligue-1']  # just get big 5
 
@@ -111,7 +115,6 @@ def main():
                 if not dframe.empty:
                     df = pd.concat([df, dframe], ignore_index=True)
 
-
         # Save as JSON
         current_dir = os.getcwd()
         path = current_dir + f"/data/teammatchdata/"
@@ -141,7 +144,7 @@ def main():
             leagueslug = league['slug']
 
             data = getHistoricData(my_api_token, leagueslug)
-            time.sleep(3)
+            
             saveOutput(data, leagueslug)
 
 

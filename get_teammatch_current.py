@@ -43,7 +43,6 @@ def main():
     # get historic data from file.   Load to data frame, get current, contatenate and save.
     
     """
-
     #my_api_token = os.getenv("APIKEY") - doesn't work. path issue??
     #my_api_token = 'fff933f9aaa4a86c2e9159ddf120999dd11440be' # online
     my_api_token =  '1c814017131711c6b5541bc50040c00f6ed76130'   # local extra@test
@@ -62,9 +61,6 @@ def main():
 
     # get latest and combine with historic.
     data = getCurrentSeasonsData(my_api_token)
-
-
-    print(data)
 
     if data:
         print('have data from current seasons')
