@@ -116,7 +116,7 @@ def main():
         current_dir = os.getcwd()
         path = current_dir + f"/data/teammatchdata/"
         Path(path).mkdir(parents=True, exist_ok=True)
-        fname = path + f'combined.json'
+        fname = path + f'historic_combined.json'
         df.to_json(fname, orient = 'records', compression = 'infer')
 
 
