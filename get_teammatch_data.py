@@ -61,6 +61,28 @@ def getHistoricData(my_api_token, leagueslug):
         return []
     
 
+def getCurrentSeasonsData(my_api_token, leagueslug):
+
+    """ 
+    This endpoint returns data for all current leagues.
+
+    """
+
+    url = f'http://127.0.0.1:8000/api/teammatchdata/current/'
+
+    headers={"Authorization": f"Token {my_api_token}"}
+    response = requests.get(url, headers=headers)
+    status_code = int(response.status_code)
+
+    if status_code == 200:
+        print(f'Status Code: 200.  Successfully retrieved data from server!')    
+        resp = response.json()
+        return resp
+    else:
+        print(f'Houston we have a problem.  Error code is: {status_code}')
+        return []
+
+
 def main():
 
     #my_api_token = os.getenv("APIKEY") - doesn't work. path issue??
@@ -75,7 +97,6 @@ def main():
 
     if LEAGUES_TO_GET:
 
-
         for league in LEAGUES_TO_GET:
 
             print(f"Getting data for league: {league}")
@@ -87,45 +108,34 @@ def main():
             if data:
                 dframe = pd.json_normalize(data)
 
-            if dframe.empty:
-                print("DF is empty")
-            else:
-                df = pd.concat([df, dframe], ignore_index=True)
-
-
-
-        # Save the outputs
-        current_dir = os.getcwd()
-        path = current_dir + f"/data/teammatchdata/"
-        Path(path).mkdir(parents=True, exist_ok=True)
+                if not dframe.empty:
+                    df = pd.concat([df, dframe], ignore_index=True)
 
 
         # Save as JSON
+        current_dir = os.getcwd()
+        path = current_dir + f"/data/teammatchdata/"
+        Path(path).mkdir(parents=True, exist_ok=True)
         fname = path + f'combined.json'
         df.to_json(fname, orient = 'records', compression = 'infer')
 
 
-    else:
-
-        # GET LIST OF LEAGUES AND SEASONS FROM API
+    else:    # GET LIST OF ALL LEAGUES AND SEASONS FROM API
         
         url = 'http://127.0.0.1:8000/api/leaguesdata/'
         #url = 'https://futstats.net/api/leaguesdata/'
-        headers={"Authorization": f"Token {my_api_token}"}
 
+        headers={"Authorization": f"Token {my_api_token}"}
         response = requests.get(url, headers=headers)
         status_code = int(response.status_code)
 
         if status_code == 200:
             print(f'Status Code: 200.  Successfully retrieved data from server!')    
             leagueseasons = response.json()
-            
         else:
             print(f'Houston we have a problem.  Error code is: {status_code}')
 
-
-
-        for league in leagueseasons[:2]:
+        for league in leagueseasons:
 
             print(f"Getting data for league: {league['name']}")
             leagueslug = league['slug']
@@ -133,6 +143,8 @@ def main():
             data = getHistoricData(my_api_token, leagueslug)
             time.sleep(3)
             saveOutput(data, leagueslug)
+
+
 
 if __name__ == '__main__':
     main()
