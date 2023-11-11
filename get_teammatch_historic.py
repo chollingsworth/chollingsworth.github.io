@@ -65,33 +65,11 @@ def getHistoricData(my_api_token, leagueslug):
         return []
     
 
-def getCurrentSeasonsData(my_api_token, leagueslug):
-
-    """ 
-    This endpoint returns data for all current leagues.
-
-    """
-
-    url = f'http://127.0.0.1:8000/api/teammatchdata/current/'
-
-    headers={"Authorization": f"Token {my_api_token}"}
-    response = requests.get(url, headers=headers)
-    status_code = int(response.status_code)
-
-    if status_code == 200:
-        print(f'Status Code: 200.  Successfully retrieved data from server!')    
-        resp = response.json()
-        return resp
-    else:
-        print(f'Houston we have a problem.  Error code is: {status_code}')
-        return []
-
 
 def main():
 
     #my_api_token = os.getenv("APIKEY") - doesn't work. path issue??
-
-    my_api_token = 'fff933f9aaa4a86c2e9159ddf120999dd11440be' # online
+    #my_api_token = 'fff933f9aaa4a86c2e9159ddf120999dd11440be' # online
 
     my_api_token =  '1c814017131711c6b5541bc50040c00f6ed76130'   # local extra@test
 

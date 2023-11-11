@@ -1,0 +1,24 @@
+This works but then all the historic data is public.  Not sure that SM would be happy with this.  
+
+
+TODO
+---------
+One possibility is to do a password protected page in the app that has links to the github page jsons 
+OR put in an S3 bucket and server from there.  Could perhaps have as password protected there.
+
+Need to review the Jupyter notebooks now have a new endpoint for tableau(2 below)
+Might need another API endpoint for current seasons from specific date for option 2
+
+
+
+Have tweaked the API.  Now two main endpoints:
+
+1/.    1 line per match.            line contains home stats and aways stats 
+2/     1 line per teammatchstat     line is one team per match.   (this is better for Power BI and tableau)
+
+
+
+
+
+
+
